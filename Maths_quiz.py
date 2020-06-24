@@ -22,10 +22,11 @@ def item_check(question, to_check):
             elif response == item[0]:
                 return item
 
-        print("sorry that is not a valid response")
+        print("Sorry, I don't understand")
 
 
-def int_check(question, compare=None, number=None, low=None):
+# setting a function that checks if user wrote a valid response
+def response_check(question, compare=None, number=None, low=None):
     global error
     if compare is None and number is not None:
         if low is not None:
@@ -36,17 +37,27 @@ def int_check(question, compare=None, number=None, low=None):
     elif compare is not None and number is None:
         error = ("Please write <, > or =")
 
-    while True:
-        try:
-            print()
-            response = int(input(question))
-            if low is not None and response < low:
+    if number is not None and compare is None:
+        while True:
+            try:
+                print()
+                response = int(input(question))
+                if low is not None and response < low:
+                    print(error)
+                    continue
+                return response
+            except ValueError:
                 print(error)
                 continue
-            return response
-        except ValueError:
-            print(error)
-            continue
+    elif compare is not None and number is None:
+        while True:
+                print()
+                response = input(question)
+                if response == "<" or response == ">" or response == "=":
+                    return response
+                else:
+                    print(error)
+                continue
 
 
 def primary_quiz():
@@ -54,24 +65,17 @@ def primary_quiz():
     for i in range(1, 6):
         num1 = random.randrange(1, 100)
         num2 = random.randrange(1, 100)
-        users_answer = int_check("Question {}: {} _ {}\n".format(i, num1, num2), compare=1)
-        if users_answer == "<":
-            if num1 < num2:
-                print("Correct")
-            else:
-                print("wrong")
-        elif users_answer == ">":
-            if num1 > num2:
-                print("Correct")
-            else:
-                print("wrong")
-        elif users_answer == "=":
-            if num1 == num2:
-                print("Correct")
-            else:
-                print("wrong")
+        users_answer = response_check("Question {}: {} _ {}\n".format(i, num1, num2), compare=1)
+        if users_answer == "<" and num1 < num2:
+            print("Correct")
+        elif users_answer == ">" and num1 > num2:
+            print("Correct")
+        elif users_answer == "=" and num1 == num2:
+            print("Correct")
         else:
-            print("")
+            print("wrong")
+
+    decoration_statement("Part 2: ", "*")
 
 def secondary_quiz():
     print("jreg")
