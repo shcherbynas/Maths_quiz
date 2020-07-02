@@ -28,7 +28,8 @@ def item_check(question, to_check):
 
 # setting up a function that checks if user wrote a valid response
 def response_check(question, compare=None, number=None, low=None):
-    global error
+    # initializing an error message
+    error = ""
     # initializing an error message for checking if a number is an integer
     if compare is None and number is not None:
         # initializing an error message for checking if user entered an integer more than a certain number
@@ -69,8 +70,10 @@ def response_check(question, compare=None, number=None, low=None):
 
 # setting up a function for the quiz for primary school children
 def primary_quiz():
+    global correct
+    global wrong
     # using a decoration_statement function to decorate a message
-    decoration_statement("Part 1: Compare these numbers (<,>,=):", "*")
+    decoration_statement("Part 1: Compare the given numbers (<,>,=):", "*")
     # asking user how many questions do they want to have in this part
     num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
     # generating questions where user have to compare numbers (whether it's more, less or equal)
@@ -78,15 +81,19 @@ def primary_quiz():
         # randomly generating 2 numbers between 1 and 100
         num1 = random.randrange(1, 100)
         num2 = random.randrange(1, 100)
-        users_answer = response_check("Question {}: {} _ {}\n".format(i, num1, num2), compare=1)
-        if users_answer == "<" and num1 < num2:
+        users_ans = response_check("Question {}: {} _ {}\n".format(i, num1, num2), compare=1)
+        if users_ans == "<" and num1 < num2:
             print("Correct")
-        elif users_answer == ">" and num1 > num2:
+            correct += 1
+        elif users_ans == ">" and num1 > num2:
             print("Correct")
-        elif users_answer == "=" and num1 == num2:
+            correct += 1
+        elif users_ans == "=" and num1 == num2:
             print("Correct")
+            correct += 1
         else:
-            print("wrong")
+            print("Wrong")
+            wrong += 1
 
     # using a decoration_statement function to decorate a message
     decoration_statement("Part 2: Adding and subtracting", "*")
@@ -100,12 +107,14 @@ def primary_quiz():
             # randomly generating 2 numbers between 1 and 50
             num1 = random.randrange(1, 50)
             num2 = random.randrange(1, 50)
-            users_answer = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
-            answer = num1 + num2
-            if users_answer == answer:
+            users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
+            correct_ans = num1 + num2
+            if users_ans == correct_ans:
                 print("Correct")
+                correct += 1
             else:
-                print("Wrong, answer is {}".format(answer))
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
         # subtracting
         elif action == "subtract":
             # randomly generating 2 numbers between 1 and 50
@@ -113,28 +122,74 @@ def primary_quiz():
             num2 = random.randrange(1, 50)
             # checking that we are subtracting from a bigger number
             if num1 > num2:
-                users_answer = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
-                answer = num1 - num2
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
+                correct_ans = num1 - num2
             else:
-                users_answer = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
-                answer = num2 - num1
-            if users_answer == answer:
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
+                correct_ans = num2 - num1
+            if users_ans == correct_ans:
                 print("Correct")
+                correct += 1
             else:
-                print("Wrong, answer is {}".format(answer))
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
 
 
 def secondary_quiz():
-    print("jreg")
+    global correct
+    global wrong
+    # using a decoration_statement function to decorate a message
+    decoration_statement("Part 1: Adding and subtracting", "-")
+    # asking user how many questions do they want to have in this part
+    num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
+    for i in range(1, num_questions + 1):
+        # randomly generating an action that we are going to do with the numbers (add or subtract)
+        action = random.choice(add_sub)
+        # adding
+        if action == "add":
+            # randomly generating 2 numbers between 1 and 150
+            num1 = random.randrange(1, 150)
+            num2 = random.randrange(1, 150)
+            users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
+            correct_ans = num1 + num2
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+        # subtracting
+        elif action == "subtract":
+            # randomly generating 2 numbers between 1 and 150
+            num1 = random.randrange(1, 150)
+            num2 = random.randrange(1, 150)
+            # checking that we are subtracting from a bigger number
+            if num1 > num2:
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
+                correct_ans = num1 - num2
+            else:
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
+                correct_ans = num2 - num1
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
 
 
 def high_quiz():
     print("web")
 
 
-# creating a list for
+# initializing variables
+correct = 0
+wrong = 0
+# creating a list to check words primary, secondary or high
 psh = ["primary", "secondary", "high"]
+# creating list to randomly generate an action
 add_sub = ["add", "subtract"]
+# asking user whether they are in primary, secondary or high school and checking their response
 users_school_year = item_check("Are you in primary (p), secondary (s) or high (h) school? ", psh)
 print(users_school_year)
 if users_school_year == "primary":
