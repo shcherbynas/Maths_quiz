@@ -133,6 +133,9 @@ def primary_quiz():
             else:
                 print("Wrong, answer is {}".format(correct_ans))
                 wrong += 1
+    print()
+    print("         Game summary")
+    decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
 def secondary_quiz():
@@ -176,6 +179,44 @@ def secondary_quiz():
             else:
                 print("Wrong, answer is {}".format(correct_ans))
                 wrong += 1
+    # using a decoration_statement function to decorate a message
+    decoration_statement("Part 2: Multiplying and dividing", "-")
+    # asking user how many questions do they want to have in this part
+    num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
+    for i in range(1, num_questions + 1):
+        # randomly generating an action that we are going to do with the numbers (multiply or divide)
+        action = random.choice(mul_div)
+        # multiplying
+        if action == "multiply":
+            # randomly generating 2 numbers between 1 and 10
+            num1 = random.randrange(1, 10)
+            num2 = random.randrange(1, 10)
+            users_ans = response_check("Question {}: {} * {} = ?\n".format(i, num1, num2), number=1)
+            correct_ans = num1 * num2
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+        # dividing
+        elif action == "divide":
+            # randomly generating 2 numbers between 1 and 20
+            num1 = random.randrange(1, 20)
+            num2 = random.randrange(1, 20)
+            # checking that we are subtracting from a bigger number
+            if num1 > num2:
+                users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
+                correct_ans = num1 - num2
+            else:
+                users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num2, num1), number=1)
+                correct_ans = num2 - num1
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
 
 
 def high_quiz():
@@ -187,6 +228,8 @@ correct = 0
 wrong = 0
 # creating a list to check words primary, secondary or high
 psh = ["primary", "secondary", "high"]
+# creating a list to randomly generate an action
+mul_div = ["multiply", "divide"]
 # creating list to randomly generate an action
 add_sub = ["add", "subtract"]
 # asking user whether they are in primary, secondary or high school and checking their response
