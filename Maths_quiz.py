@@ -70,10 +70,16 @@ def response_check(question, compare=None, number=None, low=None):
 def dividing():
     numb1 = random.randrange(1, 20)
     numb2 = random.randrange(1, 20)
-    while numb1 % numb2 == 0:
-        return numb1, numb2
-    else:
-        dividing()
+    while True:
+        numb1 = random.randrange(1, 20)
+        numb2 = random.randrange(1, 20)
+        try:
+            div = int(numb1 % numb2)
+            continue
+        except:
+            print(numb1)
+            print(numb2)
+            return numb1, numb2
 
 # setting up a function for the quiz for primary school children
 def primary_quiz():
@@ -214,14 +220,16 @@ def secondary_quiz():
         # dividing
         elif action == "divide":
             num1, num2 = dividing()
-            users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
+            print(num1)
+            print(num2)
+            '''users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
             correct_ans = num1 / num2
             if users_ans == correct_ans:
                 print("Correct")
                 correct += 1
             else:
                 print("Wrong, answer is {}".format(correct_ans))
-                wrong += 1
+                wrong += 1'''
 
 
 def high_quiz():
