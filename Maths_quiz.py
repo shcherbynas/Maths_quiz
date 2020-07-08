@@ -71,7 +71,7 @@ def dividing():
     numb1 = random.randrange(1, 20)
     numb2 = random.randrange(1, 20)
     while numb1 % numb2 == 0:
-        return [numb1, numb2]
+        return numb1, numb2
     else:
         dividing()
 
@@ -213,9 +213,7 @@ def secondary_quiz():
                 wrong += 1
         # dividing
         elif action == "divide":
-            numbers = dividing()
-            num1 = numbers[0]
-            num2 = numbers[1]
+            num1, num2 = dividing()
             users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
             correct_ans = num1 / num2
             if users_ans == correct_ans:
