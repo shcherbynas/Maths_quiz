@@ -67,19 +67,6 @@ def response_check(question, compare=None, number=None, low=None):
                 print(error)
             continue
 
-def dividing():
-    numb1 = random.randrange(1, 20)
-    numb2 = random.randrange(1, 20)
-    while True:
-        numb1 = random.randrange(1, 20)
-        numb2 = random.randrange(1, 20)
-        try:
-            div = int(numb1 % numb2)
-            continue
-        except:
-            print(numb1)
-            print(numb2)
-            return numb1, numb2
 
 # setting up a function for the quiz for primary school children
 def primary_quiz():
@@ -97,6 +84,7 @@ def primary_quiz():
         num1 = random.randrange(1, 100)
         num2 = random.randrange(1, 100)
         users_ans = response_check("Question {}: {} _ {}\n".format(i, num1, num2), compare=1)
+        # checking if user's response is correct
         if users_ans == "<" and num1 < num2:
             print("Correct")
             correct += 1
@@ -123,6 +111,7 @@ def primary_quiz():
             num1 = random.randrange(1, 50)
             num2 = random.randrange(1, 50)
             users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's response is correct
             correct_ans = num1 + num2
             if users_ans == correct_ans:
                 print("Correct")
@@ -138,10 +127,13 @@ def primary_quiz():
             # checking that we are subtracting from a bigger number
             if num1 > num2:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
+                # calculating correct answer
                 correct_ans = num1 - num2
             else:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
+                # calculating correct answer
                 correct_ans = num2 - num1
+            # checking if user's response is correct
             if users_ans == correct_ans:
                 print("Correct")
                 correct += 1
@@ -171,6 +163,7 @@ def secondary_quiz():
             num1 = random.randrange(1, 150)
             num2 = random.randrange(1, 150)
             users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's response is correct
             correct_ans = num1 + num2
             if users_ans == correct_ans:
                 print("Correct")
@@ -186,10 +179,13 @@ def secondary_quiz():
             # checking that we are subtracting from a bigger number
             if num1 > num2:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
+                # calculating correct answer
                 correct_ans = num1 - num2
             else:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
+                # calculating correct answer
                 correct_ans = num2 - num1
+            # checking if user's response is correct
             if users_ans == correct_ans:
                 print("Correct")
                 correct += 1
@@ -209,7 +205,9 @@ def secondary_quiz():
             # randomly generating 2 numbers between 1 and 10
             num1 = random.randrange(1, 10)
             num2 = random.randrange(1, 10)
+            # asking a question
             users_ans = response_check("Question {}: {} * {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's answer is correct
             correct_ans = num1 * num2
             if users_ans == correct_ans:
                 print("Correct")
@@ -219,17 +217,32 @@ def secondary_quiz():
                 wrong += 1
         # dividing
         elif action == "divide":
-            num1, num2 = dividing()
-            print(num1)
-            print(num2)
-            '''users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
-            correct_ans = num1 / num2
+            # randomly generating a number between 1 and 20
+            num1 = random.randrange(2, 20)
+            # creating list to randomly generate a number for division
+            div = [1, num1]
+            # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or itself
+            if num1 % 4 == 0:
+                div.append("2")
+                div.append("4")
+                num2 = random.choice(div)
+            # if the first number can be divided by 3 with a remainder 0, it will be divided by 1, 3 or itself
+            elif num1 % 3 == 0:
+                div.append("3")
+                num2 = random.choice(div)
+            # if the first number can't be divided by 4 or 3, it will be divided by 1 or itself
+            else:
+                num2 = random.choice(div)
+            # asking a question
+            users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's response is correct
+            correct_ans = num1 / int(num2)
             if users_ans == correct_ans:
                 print("Correct")
                 correct += 1
             else:
                 print("Wrong, answer is {}".format(correct_ans))
-                wrong += 1'''
+                wrong += 1
 
 
 def high_quiz():
@@ -247,6 +260,7 @@ psh = ["primary", "secondary", "high"]
 mul_div = ["multiply", "divide"]
 # creating list to randomly generate an action
 add_sub = ["add", "subtract"]
+
 # asking user whether they are in primary, secondary or high school and checking their response
 users_school_year = item_check("Are you in primary (p), secondary (s) or high (h) school? ", psh)
 print(users_school_year)
