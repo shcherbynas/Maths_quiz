@@ -146,8 +146,7 @@ def primary_quiz():
 
 
 def secondary_quiz():
-    global correct
-    global wrong
+    global correct, wrong
     global users_ans
     global correct_ans
     # using a decoration_statement function to decorate a message
@@ -217,20 +216,20 @@ def secondary_quiz():
                 wrong += 1
         # dividing
         elif action == "divide":
-            # randomly generating a number between 1 and 20
-            num1 = random.randrange(2, 20)
-            # creating list to randomly generate a number for division
+            # randomly generating a number between 0 and 20
+            num1 = random.randrange(0, 20)
+            # creating list to randomly generate a number for division, that includes only 1 and the number that we are dividing
             div = [1, num1]
-            # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or itself
+            # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or the number itself
             if num1 % 4 == 0:
                 div.append("2")
                 div.append("4")
                 num2 = random.choice(div)
-            # if the first number can be divided by 3 with a remainder 0, it will be divided by 1, 3 or itself
+            # if the first number can be divided by 3 with a remainder 0, it will be divided by 1, 3 or the number itself
             elif num1 % 3 == 0:
                 div.append("3")
                 num2 = random.choice(div)
-            # if the first number can't be divided by 4 or 3, it will be divided by 1 or itself
+            # if the first number can't be divided by 4 or 3, it will be divided by 1 or the number itself
             else:
                 num2 = random.choice(div)
             # asking a question
@@ -243,10 +242,129 @@ def secondary_quiz():
             else:
                 print("Wrong, answer is {}".format(correct_ans))
                 wrong += 1
+    print()
+    print("         Game summary")
+    decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
 def high_quiz():
-    print("web")
+    global correct, wrong
+    global users_ans
+    global correct_ans
+    # using a decoration_statement function to decorate a message
+    decoration_statement("Part 1: Adding and subtracting", "-")
+    # asking user if they would like to include negative numbers
+    negative = item_check("Would like to include to include negative numbers? ", yes_no)
+    # asking user how many questions do they want to have in this part
+    num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
+    for i in range(1, num_questions + 1):
+        # randomly generating an action that we are going to do with the numbers (add or subtract)
+        action = random.choice(add_sub)
+        # if user said to include negative numbers, generating numbers between -50 and 200, if not - between 0 and 500
+        if negative == "yes":
+            # randomly generating 2 numbers between -50 and 200
+            num1 = random.randrange(-50, 200)
+            num2 = random.randrange(-50, 200)
+        else:
+            # randomly generating 2 numbers between 0 and 500
+            num1 = random.randrange(0, 500)
+            num2 = random.randrange(0, 500)
+        # adding
+        if action == "add":
+            users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's response is correct
+            correct_ans = num1 + num2
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+        # subtracting
+        elif action == "subtract":
+            # checking that we are subtracting from a bigger number
+            if num1 > num2:
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
+                # calculating correct answer
+                correct_ans = num1 - num2
+            else:
+                users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num2, num1), number=1)
+                # calculating correct answer
+                correct_ans = num2 - num1
+            # checking if user's response is correct
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+
+    # using a decoration_statement function to decorate a message
+    decoration_statement("Part 2: Multiplying and dividing", "-")
+    # asking user if they would like to include negative numbers
+    negative = item_check("Would like to include to include negative numbers? ", yes_no)
+    # asking user how many questions do they want to have in this part
+    num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
+    for i in range(1, num_questions + 1):
+        # randomly generating an action that we are going to do with the numbers (multiply or divide)
+        action = random.choice(mul_div)
+        # multiplying
+        if action == "multiply":
+            # if user said to include negative numbers, generating numbers between -10 and 15, if not - between 0 and 20
+            if negative == "yes":
+                # randomly generating 2 numbers between -10 and 15
+                num1 = random.randrange(-10, 15)
+                num2 = random.randrange(-10, 15)
+            else:
+                # randomly generating 2 numbers between 0 and 20
+                num1 = random.randrange(0, 20)
+                num2 = random.randrange(0, 20)
+            # asking a question
+            users_ans = response_check("Question {}: {} * {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's answer is correct
+            correct_ans = num1 * num2
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+        # dividing
+        elif action == "divide":
+            # if user said to include negative numbers, generating a number between -10 and 20, if not - between 0 and 50
+            if negative == "yes":
+                # randomly generating a number between -10 and 20
+                num1 = random.randrange(-10, 20)
+            else:
+                # randomly generating a number between 0 and 50
+                num1 = random.randrange(0, 50)
+            # creating list to randomly generate a number for division, that includes only 1 and the number that we are dividing
+            div = [1, num1]
+            # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or the number itself
+            if num1 % 4 == 0:
+                div.append("2")
+                div.append("4")
+                num2 = random.choice(div)
+            # if the first number can be divided by 3 with a remainder 0, it will be divided by 1, 3 or the number itself
+            elif num1 % 3 == 0:
+                div.append("3")
+                num2 = random.choice(div)
+            # if the first number can't be divided by 4 or 3, it will be divided by 1 or the number itself
+            else:
+                num2 = random.choice(div)
+            # asking a question
+            users_ans = response_check("Question {}: {} / {} = ?\n".format(i, num1, num2), number=1)
+            # calculating correct answer and checking if user's response is correct
+            correct_ans = num1 / int(num2)
+            if users_ans == correct_ans:
+                print("Correct")
+                correct += 1
+            else:
+                print("Wrong, answer is {}".format(correct_ans))
+                wrong += 1
+    print()
+    print("         Game summary")
+    decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
 # initializing variables
@@ -256,17 +374,24 @@ users_ans = 0
 correct_ans = 0
 # creating a list to check words primary, secondary or high
 psh = ["primary", "secondary", "high"]
+# creating a list to check words yes or no
+yes_no = ["yes", "no"]
 # creating a list to randomly generate an action
 mul_div = ["multiply", "divide"]
 # creating list to randomly generate an action
 add_sub = ["add", "subtract"]
-
-# asking user whether they are in primary, secondary or high school and checking their response
-users_school_year = item_check("Are you in primary (p), secondary (s) or high (h) school? ", psh)
-print(users_school_year)
-if users_school_year == "primary":
-    primary_quiz()
-elif users_school_year == "secondary":
-    secondary_quiz()
+# creating a variable 'keep_going' for being able to continue or quit the game
+keep_going = ""
+while keep_going == "":
+    # asking user whether they are in primary, secondary or high school and checking their response
+    users_school_year = item_check("Are you in primary (p), secondary (s) or high (h) school? ", psh)
+    if users_school_year == "primary":
+        primary_quiz()
+    elif users_school_year == "secondary":
+        secondary_quiz()
+    else:
+        high_quiz()
+    # asking user if they want to continue playing
+    keep_going = input("Press <enter> to do the quiz one more time or any other key to finish ")
 else:
-    high_quiz()
+    print("Game finished. Thank you for playing!")
