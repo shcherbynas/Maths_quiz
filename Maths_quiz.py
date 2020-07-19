@@ -107,9 +107,9 @@ def primary_quiz():
         action = random.choice(add_sub)
         # adding
         if action == "add":
-            # randomly generating 2 numbers between 1 and 50
-            num1 = random.randrange(1, 50)
-            num2 = random.randrange(1, 50)
+            # randomly generating 2 numbers between 1 and 20
+            num1 = random.randrange(1, 20)
+            num2 = random.randrange(1, 20)
             users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
             # calculating correct answer and checking if user's response is correct
             correct_ans = num1 + num2
@@ -121,9 +121,9 @@ def primary_quiz():
                 wrong += 1
         # subtracting
         elif action == "subtract":
-            # randomly generating 2 numbers between 1 and 50
-            num1 = random.randrange(1, 50)
-            num2 = random.randrange(1, 50)
+            # randomly generating 2 numbers between 1 and 20
+            num1 = random.randrange(1, 20)
+            num2 = random.randrange(1, 20)
             # checking that we are subtracting from a bigger number
             if num1 > num2:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
@@ -145,6 +145,7 @@ def primary_quiz():
     decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
+# setting up a function for the quiz for secondary school children
 def secondary_quiz():
     global correct, wrong
     global users_ans
@@ -158,9 +159,9 @@ def secondary_quiz():
         action = random.choice(add_sub)
         # adding
         if action == "add":
-            # randomly generating 2 numbers between 1 and 150
-            num1 = random.randrange(1, 150)
-            num2 = random.randrange(1, 150)
+            # randomly generating 2 numbers between 1 and 100
+            num1 = random.randrange(1, 100)
+            num2 = random.randrange(1, 100)
             users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
             # calculating correct answer and checking if user's response is correct
             correct_ans = num1 + num2
@@ -172,9 +173,9 @@ def secondary_quiz():
                 wrong += 1
         # subtracting
         elif action == "subtract":
-            # randomly generating 2 numbers between 1 and 150
-            num1 = random.randrange(1, 150)
-            num2 = random.randrange(1, 150)
+            # randomly generating 2 numbers between 1 and 100
+            num1 = random.randrange(1, 100)
+            num2 = random.randrange(1, 100)
             # checking that we are subtracting from a bigger number
             if num1 > num2:
                 users_ans = response_check("Question {}: {} - {} = ?\n".format(i, num1, num2), number=1)
@@ -247,6 +248,7 @@ def secondary_quiz():
     decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
+# setting up a function for the quiz for high school children
 def high_quiz():
     global correct, wrong
     global users_ans
@@ -254,7 +256,7 @@ def high_quiz():
     # using a decoration_statement function to decorate a message
     decoration_statement("Part 1: Adding and subtracting", "-")
     # asking user if they would like to include negative numbers
-    negative = item_check("Would like to include to include negative numbers? ", yes_no)
+    negative = item_check("Would like to include to include negative numbers? (yes/no) ", yes_no)
     # asking user how many questions do they want to have in this part
     num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
     for i in range(1, num_questions + 1):
@@ -263,12 +265,12 @@ def high_quiz():
         # if user said to include negative numbers, generating numbers between -50 and 200, if not - between 0 and 500
         if negative == "yes":
             # randomly generating 2 numbers between -50 and 200
-            num1 = random.randrange(-50, 200)
-            num2 = random.randrange(-50, 200)
+            num1 = random.randrange(-50, 150)
+            num2 = random.randrange(-50, 150)
         else:
             # randomly generating 2 numbers between 0 and 500
-            num1 = random.randrange(0, 500)
-            num2 = random.randrange(0, 500)
+            num1 = random.randrange(0, 200)
+            num2 = random.randrange(0, 200)
         # adding
         if action == "add":
             users_ans = response_check("Question {}: {} + {} = ?\n".format(i, num1, num2), number=1)
@@ -302,7 +304,7 @@ def high_quiz():
     # using a decoration_statement function to decorate a message
     decoration_statement("Part 2: Multiplying and dividing", "-")
     # asking user if they would like to include negative numbers
-    negative = item_check("Would like to include to include negative numbers? ", yes_no)
+    negative = item_check("Would like to include to include negative numbers? (yes/no) ", yes_no)
     # asking user how many questions do they want to have in this part
     num_questions = response_check("How many questions do you want to have? ", number=1, low=1)
     for i in range(1, num_questions + 1):
@@ -367,11 +369,25 @@ def high_quiz():
     decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
+# introduction, rules
+print()
+decoration_statement("    Welcome to the Maths quiz    ", "<")
+print("This is a maths quiz for school kids of different ages.")
+print("At the beginning of the quiz you have to state whether you are in primary, secondary or high school")
+print("(there will be different questions depending on your age).")
+print("There are two parts of the quiz (each one directed on a particular subject in maths).")
+print("In each part you can choose how many questions you want to be asked.")
+print("At the end you will see how many correct and wrong answers you got.")
+print()
+print("Let's start! Good luck!")
+print()
+
 # initializing variables
 correct = 0
 wrong = 0
 users_ans = 0
 correct_ans = 0
+
 # creating a list to check words primary, secondary or high
 psh = ["primary", "secondary", "high"]
 # creating a list to check words yes or no
@@ -381,6 +397,7 @@ mul_div = ["multiply", "divide"]
 # creating list to randomly generate an action
 add_sub = ["add", "subtract"]
 # creating a variable 'keep_going' for being able to continue or quit the game
+
 keep_going = ""
 while keep_going == "":
     # asking user whether they are in primary, secondary or high school and checking their response
