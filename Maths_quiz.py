@@ -365,7 +365,7 @@ def high_quiz():
                 print("Wrong, answer is {}".format(correct_ans))
                 wrong += 1
     print()
-    print("         Game summary")
+    print("         Summary")
     decoration_statement("Correct answers: {}".format(correct) + "  |  Wrong answers: {}".format(wrong), "%")
 
 
@@ -412,4 +412,4 @@ while keep_going == "":
     # asking user if they want to continue playing
     keep_going = input("Press <enter> to do the quiz one more time or any other key to finish ")
 else:
-    print("Game finished. Thank you for playing!")
+    print("Quiz finished. Thank you!")
