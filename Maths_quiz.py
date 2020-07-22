@@ -217,8 +217,8 @@ def secondary_quiz():
                 wrong += 1
         # dividing
         elif action == "divide":
-            # randomly generating a number between 0 and 20
-            num1 = random.randrange(0, 20)
+            # randomly generating a number between 1 and 20
+            num1 = random.randrange(1, 20)
             # creating list to randomly generate a number for division, that includes only 1 and the number that we are dividing
             div = [1, num1]
             # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or the number itself
@@ -338,8 +338,8 @@ def high_quiz():
                 # randomly generating a number between -10 and 20
                 num1 = random.randrange(-10, 20)
             else:
-                # randomly generating a number between 0 and 50
-                num1 = random.randrange(0, 50)
+                # randomly generating a number between 1 and 50
+                num1 = random.randrange(1, 50)
             # creating list to randomly generate a number for division, that includes only 1 and the number that we are dividing
             div = [1, num1]
             # if this number can be divided by 4 with a remainder 0, it will be divided by 1, 2, 4 or the number itself
@@ -383,8 +383,6 @@ print("Let's start! Good luck!")
 print()
 
 # initializing variables
-correct = 0
-wrong = 0
 users_ans = 0
 correct_ans = 0
 
@@ -400,6 +398,9 @@ add_sub = ["add", "subtract"]
 
 keep_going = ""
 while keep_going == "":
+    # initializing variables
+    correct = 0
+    wrong = 0
     # asking user whether they are in primary, secondary or high school and checking their response
     users_school_year = item_check("Are you in primary (p), secondary (s) or high (h) school? ", psh)
     if users_school_year == "primary":
